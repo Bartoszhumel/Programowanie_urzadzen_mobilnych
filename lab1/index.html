@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function checkNumbers() {
+            var oddOrEvenInput = document.getElementById("oddoreven").value;
+            var isPrimeInput = document.getElementById("isprime").value;
+            var oddOrEvenAnswer = document.getElementById("oddorevenanswer");
+            var isPrimeAnswer = document.getElementById("isprimeanswer");
 
+            if (oddOrEvenInput % 2 === 0) {
+                oddOrEvenAnswer.textContent = "even";
+            } else {
+                oddOrEvenAnswer.textContent = "odd";
+            }
+
+            var isPrime = true;
+            if (isPrimeInput <= 1) {
+                isPrime = false;
+            } else {
+                for (var i = 2; i <= Math.sqrt(isPrimeInput); i++) {
+                    if (isPrimeInput % i === 0) {
+                        isPrime = false;
+                        break;
+                    }
+                }
+            }
+
+            if (isPrime) {
+                isPrimeAnswer.textContent = "yes";
+            } else {
+                isPrimeAnswer.textContent = "no";
+            }
+        }
+    </script>
+</head>
+<body>
+    <label for="oddoreven">OddOrEven</label>
+    <input type="text" id="oddoreven" />
+    <br>
+    <label id="oddorevenanswer">OddOrEvenAnswer</label>
+    <br>
+    <label for="isprime">IsPrime</label>
+    <input type="text" id="isprime" />
+    <br>
+    <label id="isprimeanswer">IsPrimeAnswer</label>
+    <br>
+    <button id="checkNumbers" onclick="checkNumbers()">Check</button>
+</body>
+</html>
