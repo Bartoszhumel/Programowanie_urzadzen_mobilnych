@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script>
-
-    </script>
 </head>
 <body>
     <label for="firstname">Firstname</label>
@@ -20,9 +17,52 @@
     <label for="search">Search</label>
     <input type="text" id="search" />
     <br>
-    <textarea  id="jsonData">JSON Data</textarea>
+    <label for="jsonData"></label>
+    <textarea id="jsonData"></textarea>
     <br>
     <button id="processJSON">Process</button>
 </body>
+<script>
+    document.getElementById("processJSON").onclick = function() {
+        const firstnameInput = document.getElementById("firstname");
+        const lastnameInput = document.getElementById("lastname");
+        const carInput = document.getElementById("car");
+        const searchInput = document.getElementById("search");
+        const jsonDataTextarea = document.getElementById("jsonData");
+
+        try {
+            var JSONdata = JSON.parse(jsonDataTextarea.value);
+        } catch (error) {
+            firstnameInput.value = "NOT FOUND";
+            lastnameInput.value = "NOT FOUND";
+            carInput.value = "NOT FOUND";
+            return;
+        }
+
+        const searchValue = searchInput.value.toLowerCase();
+        let found = false;
+
+        for (let i = 0; i < JSONdata.length; i++) {
+            const item = JSONdata[i];
+            if (item.firstname.toLowerCase() === searchValue ||
+                item.lastname.toLowerCase() === searchValue ||
+                item.car.toLowerCase() === searchValue) {
+
+                firstnameInput.value = item.firstname;
+                lastnameInput.value = item.lastname;
+                carInput.value = item.car;
+                found = true;
+                return;
+            }
+        }
+        if (!found) {
+            firstnameInput.value = "NOT FOUND";
+            lastnameInput.value = "NOT FOUND";
+            carInput.value = "NOT FOUND";
+        }
+    };
+</script>
 </html>
+
+
 
