@@ -32,7 +32,6 @@
             let firstname = fields[0].replace(/"/g, "").trim();
             let lastname = fields[1].replace(/"/g, "").trim();
             let car = fields[2].replace(/"/g, "").trim();
-            console.log(firstname, lastname, car);
 
             if (firstname.toLowerCase().includes(searchString) || lastname.toLowerCase().includes(searchString) || car.toLowerCase().includes(searchString)) {
                 document.getElementById("firstname").value = firstname;
