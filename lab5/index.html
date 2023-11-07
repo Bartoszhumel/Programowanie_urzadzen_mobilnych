@@ -1,1 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input type="text" id="imgWidth" placeholder="Image Width">
+    <br>
+    <input type="text" id="imgHeight" placeholder="Image Height">
+    <br>
 
+    <textarea id="imgData" placeholder="imgData"></textarea>
+    <br>
+
+    <button id="processImage" onclick="processImage()">Process</button>
+    <br>
+
+    <img id="imgPicture">
+    <br>
+
+    <input type="text" id="lootbox" placeholder="Lootbox">
+    <br>
+
+    <button id="checkLoot" onclick="checkLoot()">Loot</button>
+<script>
+    function processImage() {
+        const imgData = document.getElementById('imgData').value;
+        const imgPicture = document.getElementById('imgPicture');
+        imgPicture.src = 'data:image/png;base64,' + imgData;
+        const img = new Image();
+        img.onload = function () {
+            document.getElementById('imgWidth').value = img.width;
+            document.getElementById('imgHeight').value = img.height;
+        };
+        img.src = imgPicture.src;
+    }
+
+    function checkLoot() {
+        const chance = Math.random() * 100;
+        if (chance <= 1) {
+            document.getElementById('lootbox').value = '1';
+        } else {
+            document.getElementById('lootbox').value = '0';
+        }
+    }
+</script>
+</body>
+</html>
