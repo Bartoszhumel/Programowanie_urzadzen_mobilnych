@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #imgCanvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <label for="pixelX">Pixel X:</label>
+    <input type="text" id="pixelX" />
+    <br />
+    <label for="pixelY">Pixel Y:</label>
+    <input type="text" id="pixelY" />
+    <br />
+    <label for="pixelRed">Pixel Red:</label>
+    <input type="text" id="pixelRed" />
+    <br />
+    <label for="pixelGreen">Pixel Green:</label>
+    <input type="text" id="pixelGreen" />
+    <br />
+    <label for="pixelBlue">Pixel Blue:</label>
+    <input type="text" id="pixelBlue" />
+    <br />
 
+    <textarea id="imgData" placeholder="imgData "></textarea>
+    <br />
+
+    <button id="processImage" onclick="processImage()">Process</button>
+    <br />
+
+    <img id="imgPicture"/>
+    <br />
+
+    <Canvas  id="imgCanvas" width="500" height="500"></Canvas >
+    <script>
+        function processImage() {
+            // Get values from input fields
+            var pixelX = parseInt(document.getElementById("pixelX").value);
+            var pixelY = parseInt(document.getElementById("pixelY").value);
+            var imgData = document.getElementById("imgData").value;
+
+            // Create image object
+            var img = new Image();
+            img.onload = function() {
+                var canvas = document.getElementById("imgCanvas");
+                var ctx = canvas.getContext("2d");
+                // Draw the image on the canvas
+                ctx.drawImage(img, 0, 0);
+
+                var imageData = ctx.getImageData(pixelX, pixelY, 1, 1);
+                var data = imageData.data;
+                console.log(data);
+
+                document.getElementById("pixelRed").value = data[0];
+                document.getElementById("pixelGreen").value = data[1];
+                document.getElementById("pixelBlue").value = data[2];
+            };
+            img.src = "data:image/png;base64," + imgData;
+        }
+    </script>
+</body>
+</html>
