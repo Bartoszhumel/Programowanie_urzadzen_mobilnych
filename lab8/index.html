@@ -1,1 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #imgCanvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<textarea id="imgData" placeholder="Enter base64 image data"></textarea>
+<br/>
+<textarea id="hiddenText" placeholder="Hidden Text"></textarea>
+<br/>
+<button id="importImage" onclick="importImage()">Import</button>
+<br/>
+<button id="readText" onclick="readText()">Read</button>
+<br/>
+<button id="writeText" onclick="writeText()">Write</button>
+<br/>
+<img id="imgPicture" alt="Imported Image">
+<br/>
+<canvas id="imgCanvas" width="500" height="500"></canvas>
+
+<script>
+    function importImage() {
+        var imgData = document.getElementById("imgData").value;
+        var img = new Image();
+        img.onload = function() {
+            var canvas = document.getElementById("imgCanvas");
+            var ctx = canvas.getContext("2d");
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0,img.width,img.height);
+        };
+        img.src = "data:image/png;base64," + imgData;
+        var imgPicture = document.getElementById("imgPicture");
+        imgPicture.src=img.src;
+    }
+
+    function readText() {
+        const imgCanvas = document.getElementById("imgCanvas");
+        const context = imgCanvas.getContext("2d");
+        const hiddenText = document.getElementById("hiddenText");
+
+        let text = "";
+        const imageData = context.getImageData(0, 0, imgCanvas.width, imgCanvas.height).data;
+
+        for (let i = 0; i < imageData.length; i += 4) {
+            const a = imageData[i + 3];
+
+            if (a === 255) {
+                break;
+            }
+            if(a < 1 || a > 127) {
+                continue;
+            }
+
+            const charCode = a;
+            text += String.fromCharCode(charCode);
+        }
+
+        hiddenText.value = text;
+    }
+
+   
+</script>
+</body>
+</html>
 
