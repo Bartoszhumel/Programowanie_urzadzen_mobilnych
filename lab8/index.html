@@ -10,9 +10,9 @@
     </style>
 </head>
 <body>
-<textarea id="imgData" placeholder="Enter base64 image data"></textarea>
+<textarea id="imgData" placeholder="imgData"></textarea>
 <br/>
-<textarea id="hiddenText" placeholder="Hidden Text"></textarea>
+<textarea id="hiddenText" placeholder="hiddenText"></textarea>
 <br/>
 <button id="importImage" onclick="importImage()">Import</button>
 <br/>
@@ -65,7 +65,30 @@
         hiddenText.value = text;
     }
 
-   
+    function writeText() {
+        const imgCanvas = document.getElementById("imgCanvas");
+        const context = imgCanvas.getContext("2d");
+        const hiddenText = document.getElementById("hiddenText");
+
+        const text = hiddenText.value;
+        const imageData = context.createImageData(imgCanvas.width, imgCanvas.height);
+
+        for (let i = 0; i < text.length; i++) {
+            const charCode = text.charCodeAt(i);
+            const index = i * 4;
+
+            imageData.data[index] = 0;
+            imageData.data[index + 1] = 0;
+            imageData.data[index + 2] = 0;
+            imageData.data[index + 3] = charCode;
+        }
+
+        context.putImageData(imageData, 0, 0);
+        const imgDataInput = document.getElementById("imgData");
+        imgDataInput.value = imgCanvas.toDataURL().split(",")[1];
+        var imgPicture = document.getElementById("imgPicture");
+        imgPicture.src=imageData.src;
+    }
 </script>
 </body>
 </html>
