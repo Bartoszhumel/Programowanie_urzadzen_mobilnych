@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    </style>
+</head>
+<body>
+<textarea id="plaintext" placeholder="plaintext"></textarea>
+<br>
+<input type="text" id="password" placeholder="password">
+<br>
+<textarea id="ciphertext" placeholder="ciphertext"></textarea>
+<br>
+<button id="encryptButton" onclick="encrypt()">encryptButton</button>
+<br>
+<button id="decryptButton" onclick="decrypt()">decryptButton</button>
 
+<script>
+    function encrypt() {
+        const plaintext = document.getElementById("plaintext").value;
+        const password = document.getElementById("password").value;
+        const ciphertext = xorEncrypt(plaintext, password);
+        document.getElementById("ciphertext").value = btoa(ciphertext);
+    }
+
+    function decrypt() {
+        const ciphertext = document.getElementById("ciphertext").value;
+        const password = document.getElementById("password").value;
+        const decryptedText = xorDecrypt(atob(ciphertext), password);
+        document.getElementById("plaintext").value = decryptedText;
+    }
+
+    function xorEncrypt(plaintext, password) {
+        let encryptedText = "";
+        for (let i = 0; i < plaintext.length; i++) {
+            const charCode = plaintext.charCodeAt(i) ^ password.charCodeAt(i % password.length);
+            encryptedText += String.fromCharCode(charCode);
+        }
+        return encryptedText;
+    }
+
+    function xorDecrypt(ciphertext, password) {
+        let decryptedText = "";
+        for (let i = 0; i < ciphertext.length; i++) {
+            const charCode = ciphertext.charCodeAt(i) ^ password.charCodeAt(i % password.length);
+            decryptedText += String.fromCharCode(charCode);
+        }
+        return decryptedText;
+    }
+</script>
+</body>
+</html>
